@@ -52,7 +52,7 @@ Create a professional, working demonstration of smart environmental monitoring t
 
 ### Team Members
 
-- **Module 1 - Sensor (Hardware):** [Hamza bouzian] (https://github.com/78hamza)
-- **Module 2 - Logger (Cloud Analytics):** [Youness Amzil] (https://github.com/yoamzil)
+- **Module 1 - Sensor (Hardware):** [Hamza bouzian](https://github.com/78hamza)
+- **Module 2 - Logger (Cloud Analytics):** [Youness Amzil](https://github.com/yoamzil)
 - **Module 3 - Analyst (Anomaly Detection):** [Mohamed Haouari]
 - **Module 4 - Consultant (AI Assistant):** [Omar Makran]
