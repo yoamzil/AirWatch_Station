@@ -47,7 +47,7 @@ const Index = () => {
 
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
-        <header className="text-center mb-16 pt-8">
+        <header className="text-center mb-24 pt-8">
           <div className="flex items-center justify-center gap-3 mb-4 opacity-0 animate-fade-in">
             <div className="p-3 rounded-2xl bg-primary/10">
               <Leaf className="h-8 w-8 text-primary" />
@@ -128,7 +128,7 @@ const Index = () => {
         </section>
 
         {/* Footer */}
-        <footer className="text-center mt-20 pb-8 text-muted-foreground text-sm opacity-0 animate-fade-in" style={{ animationDelay: "0.7s" }}>
+        <footer className="text-center mt-40 pb-8 text-muted-foreground text-sm opacity-0 animate-fade-in" style={{ animationDelay: "0.7s" }}>
           <p>Air Quality Monitoring Dashboard</p>
         </footer>
       </div>
