@@ -2,11 +2,15 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, Leaf } from "lucide-react";
 
-// Replace this with your actual dashboard URL
-const PUBLIC_DASHBOARD_URL: string = "http://localhost:9090/dashboard/792609f0-cfbd-11f0-8614-c1208bd774e4?publicId=a7c023e0-cfdb-11f0-a766-51b67670a900";
+// Read dashboard URL from Vite env. If not set, fall back to a placeholder string.
+const PUBLIC_DASHBOARD_URL: string = (import.meta.env.VITE_DASHBOARD_URL as string) || "PUBLIC_DASHBOARD_URL";
 
 const Dashboard = () => {
-	const isPlaceholder = PUBLIC_DASHBOARD_URL === "PUBLIC_DASHBOARD_URL";
+	const isPlaceholder =
+		!PUBLIC_DASHBOARD_URL ||
+		PUBLIC_DASHBOARD_URL === "PUBLIC_DASHBOARD_URL" ||
+		PUBLIC_DASHBOARD_URL.includes("your_public_dashboard_url") ||
+		PUBLIC_DASHBOARD_URL.trim() === "";
 
 	return (
 		<div className="min-h-screen bg-background flex flex-col">
