@@ -24,14 +24,6 @@ const Dashboard = () => {
 					</div>
 					<h1 className="font-display text-lg font-semibold">Dashboard</h1>
 				</div>
-				{!isPlaceholder && (
-					<a href={PUBLIC_DASHBOARD_URL} target="_blank" rel="noopener noreferrer">
-						<Button variant="outline" size="sm" className="gap-2">
-							<ExternalLink className="h-4 w-4" />
-							Open in New Tab
-						</Button>
-					</a>
-				)}
 			</header>
 
 			{/* Dashboard iframe or placeholder */}
