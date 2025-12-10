@@ -18,3 +18,11 @@ dist/
 # Backups
 *.sql
 *.tar.gz
+
+# In your project root .gitignore
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+ENV/

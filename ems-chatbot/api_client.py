@@ -2,7 +2,7 @@ import requests
 from datetime import datetime, timedelta
 
 # API Configuration
-BASE_URL = "http://10.32.132.87:9090/api"
+BASE_URL = "http://localhost:9090/api"
 DEVICE_ID = "da8c8990-cfbc-11f0-8614-c1208bd774e4"
 ACCESS_TOKEN = "dSsrQgsYBuAQHVfMfvmw"
 USERNAME = "tenant@thingsboard.org"

@@ -173,6 +173,6 @@ def health_check():
 
 if __name__ == '__main__':
     print("🚀 Starting EMS Chatbot Backend...")
-    print("📡 Backend will be available at: http://localhost:5000")
+    print("📡 Backend will be available at: http://localhost:5001")
     print("💡 Make sure your React app points to this URL")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
