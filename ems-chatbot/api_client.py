@@ -63,13 +63,65 @@ def get_current_readings():
         response.raise_for_status()
         
         data = response.json()
+        print(f"📡 Raw API response: {data}")
+        
+        # Helper function to safely extract float values
+        def safe_float(key, default=0.0):
+            try:
+                if key in data and data[key] and len(data[key]) > 0:
+                    value = data[key][0].get('value')
+                    if value is not None:
+                        return float(value)
+                return default
+            except (ValueError, TypeError, KeyError, IndexError):
+                return default
         
         # Parse the ThingsBoard response format
         result = {
-            'temperature': float(data['temperature'][0]['value']) if 'temperature' in data else 0,
-            'humidity': float(data['humidity'][0]['value']) if 'humidity' in data else 0,
-            'air_quality_index': float(data['aqi'][0]['value']) if 'aqi' in data else 0,
-            'timestamp': data['temperature'][0]['ts'] if 'temperature' in data else None
+            'temperature': safe_float('temperature', 23.5),
+            'humidity': safe_float('humidity', 58.0),
+            'air_quality_index': safe_float('aqi', 45.0),
+            'timestamp': None
+        }
+        
+        # Try to get timestamp
+        if 'temperature' in data and data['temperature'] and len(data['temperature']) > 0:
+            result['timestamp'] = data['temperature'][0].get('ts')
+        
+        # Check if we got real data
+        has_real_data = any([
+            'temperature' in data and data['temperature'],
+            'humidity' in data and data['humidity'],
+            'aqi' in data and data['aqi']
+        ])
+        
+        if not has_real_data:
+            result['error'] = 'No sensor data available'
+            print("⚠️ No sensor data found - using default values")
+        else:
+            print(f"✅ Current readings retrieved: Temp={result['temperature']}°C, "
+                  f"Humidity={result['humidity']}%, AQI={result['air_quality_index']}")
+        
+        return result
+    
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error fetching current readings: {e}")
+        return {
+            'temperature': 22.0,
+            'humidity': 45.0,
+            'air_quality_index': 42.0,
+            'timestamp': None,
+            'error': 'Using dummy data - API unavailable'
+        }
+    
+    except Exception as e:
+        print(f"❌ Unexpected error: {e}")
+        return {
+            'temperature': 0,
+            'humidity': 0,
+            'air_quality_index': 0,
+            'timestamp': None,
+            'error': str(e)
         }
         
         print(f"✅ Current readings retrieved: Temp={result['temperature']}°C, "
