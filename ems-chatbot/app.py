@@ -28,21 +28,67 @@ def process_message(message):
     """Process the user's message and return appropriate response"""
     message = message.lower()
     
-    if any(word in message for word in ['hello', 'hi', 'hey', 'greetings', 'salam']):
+    # Greeting - expanded
+    if any(word in message for word in ['hello', 'hi', 'hey', 'greetings', 'salam', 'good morning', 'good afternoon', 'good evening', 'howdy', 'sup', "what's up", 'yo']):
         return handle_greeting()
-    elif any(word in message for word in ['current', 'now', 'today', 'air safe', 'air quality']):
+    
+    # Current air quality - expanded
+    elif any(word in message for word in ['current', 'now', 'today', 'right now', 'at the moment', 'currently', 'present', 'latest', 'air safe', 'air quality', 'how is the air', 'hows the air', 'breathe', 'outside now']):
         return handle_current_air_quality()
-    elif any(word in message for word in ['yesterday', 'history', 'historical', 'past', 'last week', 'previous']):
+    
+    # Historical data - MUCH MORE expanded
+    elif any(phrase in message for phrase in [
+        'yesterday', 'history', 'historical', 'past', 'last week', 'previous', 'before',
+        'one hour ago', 'two hours ago', 'few hours ago', 'earlier', 'this morning', 'this afternoon',
+        'last night', 'last month', 'past week', 'past month', 'ago', 'last time',
+        'what was', 'how was', 'show me', 'data from', 'readings from', 'trend', 'trends',
+        'over time', 'past data', 'historic', 'previous readings', 'old data'
+    ]):
         return handle_historical_data()
-    elif any(word in message for word in ['alert', 'warning', 'anomaly', 'problem', 'issue']):
+    
+    # Alerts - expanded
+    elif any(word in message for word in ['alert', 'alerts', 'warning', 'warnings', 'anomaly', 'anomalies', 'problem', 'problems', 'issue', 'issues', 'notification', 'notifications', 'danger', 'critical', 'emergency']):
         return handle_alerts()
-    elif any(word in message for word in ['running', 'exercise', 'outdoor', 'children', 'safe', 'should i', 'can i']):
+    
+    # Health advice - MUCH MORE expanded
+    elif any(phrase in message for phrase in [
+        'running', 'run', 'jog', 'jogging', 'exercise', 'workout', 'outdoor', 'outdoors', 'outside',
+        'children', 'child', 'kids', 'baby', 'babies',
+        'safe', 'safety', 'should i', 'can i', 'is it safe', 'is it okay',
+        'go out', 'going out', 'walk', 'walking', 'bike', 'biking', 'cycling',
+        'play outside', 'open windows', 'open window', 'ventilate',
+        'health', 'breathe', 'breathing', 'asthma', 'allergies',
+        'recommendation', 'recommendations', 'advice', 'suggest', 'suggestion',
+        'what should i do', 'what can i do', 'activity', 'activities'
+    ]):
         return handle_health_advice()
-    elif 'temperature' in message:
-        if any(word in message for word in ['yesterday', 'history', 'past']):
+    
+    # Temperature specific - expanded
+    elif any(word in message for word in ['temperature', 'temp', 'hot', 'cold', 'warm', 'cool', 'degrees', 'celsius', 'fahrenheit']):
+        if any(phrase in message for phrase in ['yesterday', 'history', 'past', 'ago', 'last', 'previous', 'before', 'earlier']):
             return handle_historical_data()
         else:
             return handle_current_air_quality()
+    
+    # Humidity specific - new!
+    elif any(word in message for word in ['humidity', 'humid', 'moisture', 'damp', 'dry']):
+        if any(phrase in message for phrase in ['yesterday', 'history', 'past', 'ago', 'last', 'previous', 'before', 'earlier']):
+            return handle_historical_data()
+        else:
+            return handle_current_air_quality()
+    
+    # AQI specific - new!
+    elif any(word in message for word in ['aqi', 'air quality index', 'pollution', 'polluted']):
+        if any(phrase in message for phrase in ['yesterday', 'history', 'past', 'ago', 'last', 'previous', 'before', 'earlier']):
+            return handle_historical_data()
+        else:
+            return handle_current_air_quality()
+    
+    # Thanks/goodbye - new!
+    elif any(word in message for word in ['thank', 'thanks', 'thank you', 'thx', 'appreciate', 'bye', 'goodbye', 'see you', 'later']):
+        return "You're welcome! Feel free to ask me anything about air quality anytime. Stay safe! 👋"
+    
+    # Default response
     else:
         return handle_default()
 
