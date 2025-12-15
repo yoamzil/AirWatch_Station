@@ -13,7 +13,7 @@ interface Message {
 }
 
 // Change this to your backend URL
-const BACKEND_URL = "http://localhost:5001";
+const BACKEND_URL = "http://10.32.132.87:5001";
 
 const Assistant = () => {
 	const [messages, setMessages] = useState<Message[]>([

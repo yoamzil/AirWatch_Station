@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Thermometer, Droplets, Wind, BarChart3, Bot, Leaf } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const THINGSBOARD_BASE = "http://localhost:9090/api";
+const THINGSBOARD_BASE = "http://10.32.132.87:9090/api";
 const DEVICE_ID = "da8c8990-cfbc-11f0-8614-c1208bd774e4";
 const USERNAME = "tenant@thingsboard.org";
 const PASSWORD = "tenant";

@@ -2,7 +2,7 @@ import requests
 from datetime import datetime, timedelta
 
 # API Configuration
-BASE_URL = "http://localhost:9090/api"
+BASE_URL = "http://10.32.132.87:9090/api"
 DEVICE_ID = "da8c8990-cfbc-11f0-8614-c1208bd774e4"
 ACCESS_TOKEN = "dSsrQgsYBuAQHVfMfvmw"
 USERNAME = "tenant@thingsboard.org"
@@ -55,7 +55,7 @@ def get_current_readings():
         
         # Build the API endpoint
         endpoint = f"{BASE_URL}/plugins/telemetry/DEVICE/{DEVICE_ID}/values/timeseries"
-        params = {"keys": "temperature,humidity,aqi"}
+        params = {"keys": "temperature,humidity,airQuality"}
         headers = {"X-Authorization": f"Bearer {token}"}
         
         # Make the request
@@ -80,7 +80,7 @@ def get_current_readings():
         result = {
             'temperature': safe_float('temperature', 23.5),
             'humidity': safe_float('humidity', 58.0),
-            'air_quality_index': safe_float('aqi', 45.0),
+            'air_quality_index': safe_float('airQuality', 45.0),
             'timestamp': None
         }
         
@@ -92,7 +92,7 @@ def get_current_readings():
         has_real_data = any([
             'temperature' in data and data['temperature'],
             'humidity' in data and data['humidity'],
-            'aqi' in data and data['aqi']
+            'airQuality' in data and data['airQuality']
         ])
         
         if not has_real_data:
@@ -100,7 +100,7 @@ def get_current_readings():
             print("⚠️ No sensor data found - using default values")
         else:
             print(f"✅ Current readings retrieved: Temp={result['temperature']}°C, "
-                  f"Humidity={result['humidity']}%, AQI={result['air_quality_index']}")
+                  f"Humidity={result['humidity']}%, airQuality={result['air_quality_index']}")
         
         return result
     
@@ -125,7 +125,7 @@ def get_current_readings():
         }
         
         print(f"✅ Current readings retrieved: Temp={result['temperature']}°C, "
-              f"Humidity={result['humidity']}%, AQI={result['air_quality_index']}")
+              f"Humidity={result['humidity']}%, airQuality={result['air_quality_index']}")
         
         return result
     
@@ -157,7 +157,7 @@ def get_historical_data(days=7):
     Args:
         days: Number of days of history to retrieve (default: 7)
     
-    Returns: list of readings with date, temperature, humidity, and aqi
+    Returns: list of readings with date, temperature, humidity, and airQuality
     """
     try:
         # Get JWT token
@@ -172,7 +172,7 @@ def get_historical_data(days=7):
         # Build the API endpoint
         endpoint = f"{BASE_URL}/plugins/telemetry/DEVICE/{DEVICE_ID}/values/timeseries"
         params = {
-            "keys": "temperature,humidity,aqi",
+            "keys": "temperature,humidity,airQuality",
             "startTs": start_time,
             "endTs": end_time
         }
@@ -191,7 +191,7 @@ def get_historical_data(days=7):
         if 'temperature' in data and data['temperature']:
             temp_data = {item['ts']: float(item['value']) for item in data['temperature']}
             humid_data = {item['ts']: float(item['value']) for item in data.get('humidity', [])}
-            aqi_data = {item['ts']: float(item['value']) for item in data.get('aqi', [])}
+            airQuality_data = {item['ts']: float(item['value']) for item in data.get('airQuality', [])}
             
             # Combine data by timestamp
             for ts in sorted(temp_data.keys(), reverse=True):
@@ -200,7 +200,7 @@ def get_historical_data(days=7):
                     'date': datetime.fromtimestamp(ts / 1000).strftime('%Y-%m-%d %H:%M'),
                     'temperature': temp_data.get(ts, 0),
                     'humidity': humid_data.get(ts, 0),
-                    'air_quality_index': aqi_data.get(ts, 0)
+                    'air_quality_index': airQuality_data.get(ts, 0)
                 })
         
         print(f"✅ Retrieved {len(readings)} historical readings")
@@ -232,15 +232,15 @@ def get_alerts():
         alerts = []
         
         for reading in recent_data:
-            aqi = reading.get('air_quality_index', 0)
+            airQuality = reading.get('air_quality_index', 0)
             temp = reading.get('temperature', 0)
             
-            if aqi > 100:
+            if airQuality > 100:
                 alerts.append({
                     'timestamp': reading.get('date', 'Unknown'),
-                    'type': 'High AQI',
-                    'message': f"Air quality reached unhealthy levels (AQI: {aqi})",
-                    'severity': 'warning' if aqi < 150 else 'critical'
+                    'type': 'High airQuality',
+                    'message': f"Air quality reached unhealthy levels (airQuality: {airQuality})",
+                    'severity': 'warning' if airQuality < 150 else 'critical'
                 })
             
             if temp > 35:
