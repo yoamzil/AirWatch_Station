@@ -57,4 +57,3 @@ Create a professional, working demonstration of smart environmental monitoring t
 - **Module 3 - Analyst (Anomaly Detection):** [Mohamed Haouari](https://github.com/MohamedHaouari0)
 - **Module 4 - Consultant (AI Assistant):** [Omar Makran](https://github.com/omar-makran)
 - **Module 5 - Physical Presentation (3D Design):** [Anas Atbir](https://github.com/Pipors/)
-- **Module 6 - Documentation:** [Name]
